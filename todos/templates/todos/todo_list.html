@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'todos/style.css' %}">
+</head>
+<br />
+<body class="bg-light">
+<br />
+    <div class="container">
+        <div class="row-mt-5 ">
+            <div class="col-md-8 offset-md-2 ">
+                <div class="card ">
+                    <div class="card-header shadow-sm bg-white ">
+                        <h1 class="display-5 text-uppercase text-info ">
+                            <i class="fas fa-check-double "></i> Todos
+                        </h1>
+                    </div>
+                    <div class="card-body ">
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <form action="{% url 'insert_todo_item' %}" method="POST" autocomplete="off">
+                                    {% csrf_token %}
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="content" id="">
+                                        <div class="input-group-append text-info">
+                                            <span class="input-group-text bg-white py-0">
+                                        <button type="submit" class="btn btn-sm text-info">
+                                            <i class="fa fa-plus-circle fa-lg"></i>
+                                            Agregar Tarea</button>
+                                    </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                            {% for todo in todo_list %}
+                            <li class="list-group-item">{{ todo.content }}
+                                <form action="{% url 'delete_todo_item' todo.id %}" method="POST" class="float-right d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="far fa-trash-alt a-lg-text-danger-float-right"></i>
+                                        Eliminar</button>
+                                </form>
+                            </li>
+                            {% empty %}
+                            <span class="font-italic">No Todo Item Found</span> {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+</body>
+
+</html>
